@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - OCR_LANGUAGE=pt
+      - OCR_GPU=false
+    volumes:
+      - ./uploads:/app/uploads
+      - ./temp:/app/temp
+      - ./.cache:/app/.cache
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+    networks:
+      - leitor_network
+
+networks:
+  leitor_network:
+    driver: bridge

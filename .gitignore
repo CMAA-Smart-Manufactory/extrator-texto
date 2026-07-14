@@ -1,0 +1,56 @@
+# Python virtual environments
+venv/
+env/
+ENV/
+.env/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# IDE
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+
+# API
+uploads/
+temp/
+*.log
+.env
+.env.local
+.cache/
+
+# EasyOCR cache (modelos de OCR)
+.EasyOCR/
+~/.EasyOCR/
+
+# Resultados
+resultados/
+resultado.json
+resultado.txt
+resultado/
+
+# Temporários
+*.tmp
+*.bak
+*.sqlite
+*.db
+
+# Arquivos extras
+prompt.txt

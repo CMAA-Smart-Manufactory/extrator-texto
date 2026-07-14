@@ -1,0 +1,31 @@
+# Requirements for Development
+
+# Main dependencies
+easyocr
+pymupdf
+opencv-python-headless
+openpyxl
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+
+# Testing
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+
+# Development tools
+black==23.12.0
+flake8==6.1.0
+isort==5.13.2
+mypy==1.7.1
+
+# Documentation
+mkdocs==1.5.3
+mkdocs-material==9.4.14
+
+# Performance testing
+locust==2.17.0
+
+# Code quality
+pylint==3.0.3
