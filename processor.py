@@ -9,6 +9,25 @@ import openpyxl
 
 SUPPORTED_EXTENSIONS = {'.pdf', '.png', '.jpg', '.jpeg', '.xlsx', '.xlsm'}
 
+# Reader do easyocr é caro para instanciar (carrega modelos do disco).
+# Mantemos um único reader em cache (singleton), configurável via variáveis
+# de ambiente, em vez de recriá-lo a cada arquivo processado.
+_OCR_READER = None
+
+
+def _get_ocr_reader() -> "easyocr.Reader":
+    """Retorna uma instância cacheada do leitor easyocr (lazy singleton)."""
+    global _OCR_READER
+    if _OCR_READER is None:
+        language = os.environ.get("OCR_LANGUAGE", "pt")
+        gpu_enabled = os.environ.get("OCR_GPU", "false").strip().lower() in ("1", "true", "yes")
+        model_dir = os.environ.get("EASYOCR_MODEL_DIR")
+        kwargs = {"gpu": gpu_enabled}
+        if model_dir:
+            kwargs["model_storage_directory"] = model_dir
+        _OCR_READER = easyocr.Reader([language], **kwargs)
+    return _OCR_READER
+
 
 def extract_text_from_image(file_path: str) -> tuple[str, str]:
     """
@@ -27,7 +46,7 @@ def extract_text_from_image(file_path: str) -> tuple[str, str]:
     if image is None:
         raise ValueError(f"Não foi possível ler a imagem: {file_path}")
 
-    reader = easyocr.Reader(['pt'], gpu=False)
+    reader = _get_ocr_reader()
     # get detailed results with bounding boxes to try to preserve layout
     results = reader.readtext(image, detail=1, paragraph=False)
 
