@@ -5,15 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    environment:
-      - API_HOST=0.0.0.0
-      - API_PORT=8000
-      - OCR_LANGUAGE=pt
-      - OCR_GPU=false
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-*}
-      - API_KEY=${API_KEY:-}
-      - MAX_FILE_SIZE=${MAX_FILE_SIZE:-52428800}
-      - ENABLE_DEBUG_ENDPOINT=${ENABLE_DEBUG_ENDPOINT:-false}
     volumes:
       - ./uploads:/app/uploads
       - ./temp:/app/temp
