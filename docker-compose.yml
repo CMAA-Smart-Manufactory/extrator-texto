@@ -5,21 +5,25 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+
     volumes:
       - ./uploads:/app/uploads
       - ./temp:/app/temp
       - ./.cache:/app/.cache
       - ./easyocr-models:/app/.EasyOCR
+
     restart: unless-stopped
+
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
       interval: 30s
       timeout: 10s
       retries: 3
       start_period: 90s
-    networks:
-      - leitor_network
+
+    ports:
+      - "8000:8000"
 
 networks:
-  leitor_network:
+  default:
     driver: bridge
